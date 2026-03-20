@@ -1,0 +1,77 @@
+﻿Version     0.0
+Platform    ESP32-P4-70CT-LR
+PlatRes     800x1280
+Depends
+end
+Options
+    Arduino_uSD
+    FQBN                         esp32:esp32:esp32p4_4ds_mipi
+    Speed                        9600
+    Checksum                     No
+    ResponseSize                 2
+    Multidrop                    No
+    Destination                  0
+    DestBank                     0
+    MainForm                     0
+    SndBuf                       0
+    ButtonDisable                No
+    SignedDigits                 No
+    MaxString                    75
+    ComPort                      0
+    ComTX1pinIdx                 0
+    ComRX1pinIdx                 0
+    GCxFormat                    JPEG
+    GCxDest                      Flash
+end
+Form
+    Name                         Form1
+    Alias                        Form1
+    Bgtype                       Color
+    Color                        BLACK
+    Image                        (None)
+    Source.Height                0
+    Source.Left                  0
+    Source.Top                   0
+    Source.Width                 0
+    OnActivate                   ''
+    OnCreate                     ''
+    OnRepeat                     ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+Keyboard
+    Name                         Keyboard1
+    Alias                        Keyboard1
+    AutoCapsDisplay              Yes
+    Fill                         (Default)
+    Font.Color                   BLACK
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    26
+    Font.Style                   []
+    Height                       400
+    HighlightCaps                BLACK
+    KeyboardType                 KB1
+    KeyDistance                  0
+    Left                         0
+    SmallFont.Color              BLACK
+    SmallFont.Effects            []
+    SmallFont.Name               Tahoma
+    SmallFont.Size               20
+    SmallFont.Style              []
+    Top                          400
+    Width                        1280
+    OnChanged                    ''
+end
+UserImages
+    Name                         Userimages1
+    Alias                        Userimages1
+    Height                       400
+    Images                       scroll-arrows.png
+    Left                         1180
+    Stretch                      No
+    Top                          0
+    Width                        100
+    OnChanged                    ''
+end

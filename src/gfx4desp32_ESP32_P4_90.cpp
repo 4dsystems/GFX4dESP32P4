@@ -1,0 +1,10 @@
+#include "gfx4desp32_ESP32_P4_90.h"
+
+gfx4desp32_ESP32_P4_90::gfx4desp32_ESP32_P4_90()
+    : gfx4desp32_mipi_panel(config, ESP32P4_90_WIDTH, ESP32P4_90_HEIGHT, ESP32P4_90_BL_IO, GEN4_MIPI_BK_LIGHT_ON_LEVEL, GEN4_MIPI_BK_LIGHT_OFF_LEVEL, 0)
+{
+}
+
+gfx4desp32_ESP32_P4_90::~gfx4desp32_ESP32_P4_90()
+{
+}

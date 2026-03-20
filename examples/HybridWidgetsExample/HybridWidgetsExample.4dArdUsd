@@ -1,0 +1,58 @@
+﻿Version     0.0
+Platform    ESP32-P4-70CT-P
+PlatRes     800x1280
+Depends
+end
+Options
+    Arduino_uSD
+    FQBN                         esp32:esp32:esp32p4_4ds_mipi:Revision=prev3,DebugLevel=none,DisplayModel=esp32p4_70,EraseFlash=none,JTAGAdapter=default,PartitionScheme=app5M_fat24M_32MB,UploadMode=default,UploadSpeed=921600,CDCOnBoot=default,DFUOnBoot=default,MSCOnBoot=default,USBMode=default
+    Speed                        9600
+    Checksum                     No
+    ResponseSize                 2
+    Multidrop                    No
+    Destination                  0
+    DestBank                     0
+    MainForm                     0
+    SndBuf                       0
+    ButtonDisable                No
+    SignedDigits                 No
+    MaxString                    75
+    ComPort                      0
+    ComTX1pinIdx                 0
+    ComRX1pinIdx                 0
+    GCxFormat                    JPEG
+    GCxDest                      Flash
+end
+Form
+    Name                         Form1
+    Alias                        Form1
+    Bgtype                       Color
+    Color                        BLACK
+    Image                        (None)
+    Source.Height                0
+    Source.Left                  0
+    Source.Top                   0
+    Source.Width                 0
+    OnActivate                   ''
+    OnCreate                     ''
+    OnRepeat                     ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+Image
+    Name                         Image1
+    Alias                        Image1
+    Height                       480
+    Image                        GaugeBKGDoubleSized.png
+    Left                         0
+    Source.Height                480
+    Source.Left                  0
+    Source.Top                   0
+    Source.Width                 480
+    Top                          0
+    Width                        480
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end

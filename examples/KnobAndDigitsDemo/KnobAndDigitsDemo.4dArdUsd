@@ -1,0 +1,72 @@
+﻿Version     0.0
+Platform    ESP32-P4-70CT-P
+PlatRes     800x1280
+Depends
+end
+Options
+    Arduino_uSD
+    FQBN                         esp32:esp32:esp32p4_4ds_mipi:Revision=prev3,DebugLevel=none,DisplayModel=esp32p4_70,EraseFlash=none,JTAGAdapter=default,PartitionScheme=app5M_fat24M_32MB,UploadMode=default,UploadSpeed=921600,CDCOnBoot=default,DFUOnBoot=default,MSCOnBoot=default,USBMode=default
+    Speed                        9600
+    Checksum                     No
+    ResponseSize                 2
+    Multidrop                    No
+    Destination                  0
+    DestBank                     0
+    MainForm                     0
+    SndBuf                       0
+    ButtonDisable                No
+    SignedDigits                 No
+    MaxString                    75
+    ComPort                      0
+    ComTX1pinIdx                 0
+    ComRX1pinIdx                 0
+    GCxFormat                    JPEG
+    GCxDest                      Flash
+end
+Form
+    Name                         Form1
+    Alias                        Form1
+    Bgtype                       Color
+    Color                        BLACK
+    Image                        (None)
+    Source.Height                0
+    Source.Left                  0
+    Source.Top                   0
+    Source.Width                 0
+    OnActivate                   ''
+    OnCreate                     ''
+    OnRepeat                     ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+SmartKnob
+    Name                         SmartKnob1
+    Alias                        SmartKnob1
+    Config                       SmartKnob1
+    Left                         220
+    MaxAngle                     0
+    MinAngle                     0
+    Top                          600
+    OnChanged                    ''
+    OnChanging                   ''
+end
+LedDigits
+    Name                         Leddigits1
+    Alias                        Leddigits1
+    Color                        BLACK
+    Decimals                     0
+    Digits                       3
+    Height                       221
+    LeadingZero                  Yes
+    Left                         170
+    OutlineColor                 BLACK
+    Palette.High                 clLime
+    Palette.Low                  0x003E00
+    Top                          291
+    Width                        477
+    OnChanged                    ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end

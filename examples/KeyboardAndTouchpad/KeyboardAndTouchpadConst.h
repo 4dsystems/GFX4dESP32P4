@@ -1,0 +1,97 @@
+// File generated 2/27/2026 12:07:45 PM
+// Warning! This is a generated file, any manual changes will be
+// lost during the next generation.
+
+ uint8_t iKeyboard1keystrokes[] {0x60, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x30, 0x2D, 0x3D, 0x08, 0x09, 0x71,
+                              0x77, 0x65, 0x72, 0x74, 0x79, 0x75, 0x69, 0x6F, 0x70, 0x5B, 0x5D, 0x5C, 0xFF, 0x61, 0x73, 0x64,
+                              0x66, 0x67, 0x68, 0x6A, 0x6B, 0x6C, 0x3B, 0x27, 0x0A, 0xFF, 0x7A, 0x78, 0x63, 0x76, 0x62, 0x6E,
+                              0x6D, 0x2C, 0x2E, 0x2F, 0xFF, 0xFF, 0x20, 0xFF, 0x1C, 0x1E, 0x1F, 0x1D, 0x7E, 0x21, 0x40, 0x23,
+                              0x24, 0x25, 0x5E, 0x26, 0x2A, 0x28, 0x29, 0x5F, 0x2B, 0x08, 0x0F, 0x51, 0x57, 0x45, 0x52, 0x54,
+                              0x59, 0x55, 0x49, 0x4F, 0x50, 0x7B, 0x7D, 0x7C, 0xFF, 0x41, 0x53, 0x44, 0x46, 0x47, 0x48, 0x4A,
+                              0x4B, 0x4C, 0x3A, 0x22, 0x0D, 0xFF, 0x5A, 0x58, 0x43, 0x56, 0x42, 0x4E, 0x4D, 0x3C, 0x3E, 0x3F,
+                              0xFF, 0xFF, 0x20, 0xFF, 0x1C, 0x1E, 0x1F, 0x1D, 0x60, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37,
+                              0x38, 0x39, 0x30, 0x2D, 0x3D, 0x08, 0x09, 0x51, 0x57, 0x45, 0x52, 0x54, 0x59, 0x55, 0x49, 0x4F,
+                              0x50, 0x5B, 0x5D, 0x5C, 0xFF, 0x41, 0x53, 0x44, 0x46, 0x47, 0x48, 0x4A, 0x4B, 0x4C, 0x3B, 0x27,
+                              0x0A, 0xFF, 0x5A, 0x58, 0x43, 0x56, 0x42, 0x4E, 0x4D, 0x2C, 0x2E, 0x2F, 0xFF, 0xFF, 0x20, 0xFF,
+                              0x1C, 0x1E, 0x1F, 0x1D, 0x7E, 0x21, 0x40, 0x23, 0x24, 0x25, 0x5E, 0x26, 0x2A, 0x28, 0x29, 0x5F,
+                              0x2B, 0x08, 0x0F, 0x71, 0x77, 0x65, 0x72, 0x74, 0x79, 0x75, 0x69, 0x6F, 0x70, 0x7B, 0x7D, 0x7C,
+                              0xFF, 0x61, 0x73, 0x64, 0x66, 0x67, 0x68, 0x6A, 0x6B, 0x6C, 0x3A, 0x22, 0x0D, 0xFF, 0x7A, 0x78,
+                              0x63, 0x76, 0x62, 0x6E, 0x6D, 0x3C, 0x3E, 0x3F, 0xFF, 0xFF, 0x20, 0xFF, 0x1C, 0x1E, 0x1F, 0x1D
+} ;
+
+
+#define  IFONT_OFFSET     0
+// object indexes into ImageControl
+#define iKeyboard1              0 // offset 0x7BC
+#define iKeyboard1_0            1 // offset 0x2A200
+#define iKeyboard1_1            2 // offset 0x2C200
+#define iKeyboard1_2            3 // offset 0x2EA00
+#define iKeyboard1_3            4 // offset 0x31200
+#define iKeyboard1_4            5 // offset 0x33A00
+#define iKeyboard1_5            6 // offset 0x36200
+#define iKeyboard1_6            7 // offset 0x38A00
+#define iKeyboard1_7            8 // offset 0x3B200
+#define iKeyboard1_8            9 // offset 0x3DA00
+#define iKeyboard1_9           10 // offset 0x40200
+#define iKeyboard1_10          11 // offset 0x42A00
+#define iKeyboard1_11          12 // offset 0x45200
+#define iKeyboard1_12          13 // offset 0x47200
+#define iKeyboard1_13          14 // offset 0x49200
+#define iKeyboard1_14          15 // offset 0x4CA00
+#define iKeyboard1_15          16 // offset 0x4F200
+#define iKeyboard1_16          17 // offset 0x51600
+#define iKeyboard1_17          18 // offset 0x53A00
+#define iKeyboard1_18          19 // offset 0x55A00
+#define iKeyboard1_19          20 // offset 0x57C00
+#define iKeyboard1_20          21 // offset 0x59C00
+#define iKeyboard1_21          22 // offset 0x5BC00
+#define iKeyboard1_22          23 // offset 0x5DC00
+#define iKeyboard1_23          24 // offset 0x5FC00
+#define iKeyboard1_24          25 // offset 0x61E00
+#define iKeyboard1_25          26 // offset 0x63E00
+#define iKeyboard1_26          27 // offset 0x66200
+#define iKeyboard1_27          28 // offset 0x68600
+#define iKeyboard1_28          29 // offset 0x6AE00
+#define iKeyboard1_29          30 // offset 0x6EE00
+#define iKeyboard1_30          31 // offset 0x70E00
+#define iKeyboard1_31          32 // offset 0x73000
+#define iKeyboard1_32          33 // offset 0x75000
+#define iKeyboard1_33          34 // offset 0x77000
+#define iKeyboard1_34          35 // offset 0x79400
+#define iKeyboard1_35          36 // offset 0x7B400
+#define iKeyboard1_36          37 // offset 0x7D400
+#define iKeyboard1_37          38 // offset 0x7F600
+#define iKeyboard1_38          39 // offset 0x81600
+#define iKeyboard1_39          40 // offset 0x83600
+#define iKeyboard1_40          41 // offset 0x85600
+#define iKeyboard1_41          42 // offset 0x88E00
+#define iKeyboard1_42          43 // offset 0x8C600
+#define iKeyboard1_43          44 // offset 0x8E600
+#define iKeyboard1_44          45 // offset 0x90800
+#define iKeyboard1_45          46 // offset 0x92800
+#define iKeyboard1_46          47 // offset 0x94800
+#define iKeyboard1_47          48 // offset 0x96A00
+#define iKeyboard1_48          49 // offset 0x98A00
+#define iKeyboard1_49          50 // offset 0x9AE00
+#define iKeyboard1_50          51 // offset 0x9CE00
+#define iKeyboard1_51          52 // offset 0x9EE00
+#define iKeyboard1_52          53 // offset 0xA1200
+#define iKeyboard1_53          54 // offset 0xA5200
+#define iKeyboard1_54          55 // offset 0xA8200
+#define iKeyboard1_55          56 // offset 0xAD200
+#define iKeyboard1_56          57 // offset 0xB0200
+#define iKeyboard1_57          58 // offset 0xB2200
+#define iKeyboard1_58          59 // offset 0xB4200
+#define iKeyboard1_59          60 // offset 0xB6200
+#define iUserimages1           61 // offset 0xB8200
+
+int8_t oKeyboard1[12] = {-1, 0, 0, 0, 0, 41, 52, 53, 55, 28, 60, 1} ;
+
+static const bool inputs[] PROGMEM = { false, true, true, true, true, true, true, true, 
+                  true, true, true, true, true, true, true, true, 
+                  true, true, true, true, true, true, true, true, 
+                  true, true, true, true, true, true, true, true, 
+                  true, true, true, true, true, true, true, true, 
+                  true, true, true, true, true, true, true, true, 
+                  true, true, true, true, true, true, true, true, 
+                  true, true, true, true, true, true} ;

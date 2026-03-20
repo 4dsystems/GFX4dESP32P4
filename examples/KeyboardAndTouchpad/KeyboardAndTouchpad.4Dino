@@ -1,0 +1,193 @@
+#include "gfx4desp32_%%displaynm%%.h"
+
+gfx4desp32_%%displaynm%% gfx = gfx4desp32_%%displaynm%%();
+
+#include "KeyboardAndTouchpadConst.h"    // Note. This file will not be created if there are no generated graphics
+
+// Uncomment if using GC* in program flash.
+#include "KeyboardAndTouchpadGCx.h"     // Note. This file will be generated when graphics destination program flash
+
+#include "USB.h"
+#include "USBHIDMouse.h"
+#include "USBHIDKeyboard.h"
+
+#define SCROLL_DIVIDER 20    // higher = slower scroll
+
+USBHIDMouse Mouse;
+USBHIDKeyboard Keyboard;
+
+int x, y, event;
+
+int lastX = 0;
+int lastY = 0;
+
+unsigned long pressTime = 0;
+unsigned long lastTapTime = 0;
+
+const unsigned long HOLD_TIME = 500;        // ms for right click
+const unsigned long DOUBLE_TAP_TIME = 300;  // ms between taps
+
+bool touchActive = false;
+
+void setup()
+{
+  gfx.begin();
+  gfx.Cls();
+  gfx.ScrollEnable(false);
+  gfx.BacklightOn(true);
+  gfx.Orientation(%%orientation%%);
+  gfx.SmoothScrollSpeed(5);
+  gfx.TextColor(WHITE, BLACK); gfx.Font(2);  gfx.TextSize(1);
+// Uncomment one of the three followin statements depending on the type of graphics file you are using GCI, GCJ, or GC* in program flash.
+//gfx.Open4dGFX("KeyboardAndTouchpad"); // Opens DAT and GCI files for read using filename without extension.
+//gfx.Open4dGFX("KeyboardAndTouchpad.gcj"); // Opens GCJ file for read using complete filename.
+gfx.Open4dGFX(KeyboardAndTouchpad, KeyboardAndTouchpad_size); // Opens GCJ from program space using array name and size
+//gfx.Open4dGFX(KeyboardAndTouchpad_dat, KeyboardAndTouchpad_dat_size, KeyboardAndTouchpad_gci, KeyboardAndTouchpad_gci_size); // Opens DAT/GCI from program space using array name and size
+  gfx.touch_Set(TOUCH_ENABLE);                // Global touch enabled
+  gfx.imageTouchEnableRange(iKeyboard1_0, iKeyboard1_59, true, KEYPAD) ;   // init_Keyboard1 enable touch on keys (on Form1)
+  gfx.imageTouchEnable(iKeyboard1, false) ;                  // init_Keyboard1 disable touch on full keyboard (on Form1)
+  gfx.UserImages(iKeyboard1,0) ;                             // init_Keyboard1 show initially, if required (on Form1)
+
+  gfx.print("Use the top area as a touch pad");
+
+  USB.begin();
+  Mouse.begin();
+  Keyboard.begin();
+  gfx.UserImages(iUserimages1,0) ;                           // init_Userimages1 show initialy, if required
+} // end Setup **do not alter, remove or duplicate this line**
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  int itouched, val;
+  if (gfx.touch_Update()) {
+    x = gfx.touch_GetX();
+    y = gfx.touch_GetY();
+    event = gfx.touch_GetPen();
+    itouched = gfx.imageTouched();
+    switch (itouched) {  // start touched selection **do not alter, remove or duplicate this line**
+      // case statements for Knobs and Sliders go here
+      default:                                // end touched selection **do not alter, remove or duplicate this line**
+        int button = gfx.ImageTouchedAuto();  // use default for keyboards and buttons
+        val = gfx.getImageValue(button);
+        switch (button) {  // start button selection **do not alter, remove or duplicate this line**
+          // case, one for each button or keyboard, default should end up as -1
+          case iKeyboard1_0 ... iKeyboard1_59:  // process_Keyboard1 process Keyboard (on Form1)
+            int key = gfx.DecodeKeypad(iKeyboard1, button, iKeyboard1keystrokes, oKeyboard1);
+            if (key != -1) {  // if not special key
+              // process key pressed
+              gfx.MoveTo(0, 15);
+              gfx.printf("Pressed 0x%02X : %c ", key, key);
+              // send the key to USB HID
+              Keyboard.write(key);
+              //if (key == 13) {
+              //  Keyboard.write(key);
+              //}
+            }
+            break;
+        }  // end button selection **do not alter, remove or duplicate this line**
+    }
+
+    // Ignore touches outside touchpad area
+    if (!(x >= 0 && x < 1280 && y >= 0 && y < 400)) return;
+
+    if (x >= 1180) {
+      // Scroll area (right 100px strip)
+
+      if (event == TOUCH_PRESSED) {
+
+        if (touchActive) {
+          int dy = y - lastY;
+
+          int wheel = -dy / 20;  // adjust 20 for speed
+
+          if (wheel != 0) {
+            gfx.MoveTo(0, 15);
+            gfx.printf("Scrolling %d      ", wheel);
+            Mouse.move(0, 0, wheel);  // scroll only
+          }
+        } else {
+          pressTime = millis();
+          touchActive = true;
+        }
+
+        lastY = y;
+      }
+
+      if (event == TOUCH_RELEASED) {
+        touchActive = false;
+      }
+
+      return;  // prevent normal cursor movement below
+    }
+
+    if (event == TOUCH_PRESSED) {
+      // ===== TOUCH MOVE =====
+      if (touchActive) {
+        int dx = x - lastX;
+        int dy = y - lastY;
+
+        gfx.MoveTo(0, 15);
+        gfx.printf("Moving mouse by (%d, %d) ", dx, dy);
+        Mouse.move(dx, dy);
+        // ===== TOUCH PRESSED =====
+      } else {
+        pressTime = millis();
+        touchActive = true;
+      }
+      lastX = x;
+      lastY = y;
+    }
+
+    // ===== TOUCH RELEASED =====
+    if (event == TOUCH_RELEASED) {
+      touchActive = false;
+
+      gfx.MoveTo(0, 15);
+      gfx.printf("Touch released         ");
+
+      unsigned long duration = millis() - pressTime;
+
+      // HOLD ? RIGHT CLICK
+      if (duration >= HOLD_TIME) {
+        Mouse.click(MOUSE_BUTTON_RIGHT);
+      } else {
+        // DOUBLE TAP CHECK
+        if (millis() - lastTapTime <= DOUBLE_TAP_TIME) {
+          Mouse.click(MOUSE_BUTTON_LEFT);
+          lastTapTime = 0;
+        } else {
+          lastTapTime = millis();
+        }
+      }
+    }
+    /*
+    // ===== TOUCH RELEASED =====
+    if (event == TOUCH_RELEASED) {
+      touchActive = false;
+
+      gfx.MoveTo(0, 15);
+      gfx.printf("Touch released         ");
+
+      unsigned long duration = millis() - pressTime;
+
+      // Ignore long holds (optional safety)
+      if (duration > 600) {
+        lastTapTime = 0;
+        return;
+      }
+
+      // DOUBLE TAP ? RIGHT CLICK
+      if (millis() - lastTapTime <= DOUBLE_TAP_TIME) {
+        Mouse.click(MOUSE_BUTTON_RIGHT);
+        lastTapTime = 0;
+      }
+      // SINGLE TAP ? LEFT CLICK
+      else {
+        Mouse.click(MOUSE_BUTTON_LEFT);
+        lastTapTime = millis();
+      }
+    }
+    */
+  }
+}
+

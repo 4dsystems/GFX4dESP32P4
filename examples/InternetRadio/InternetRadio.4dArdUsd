@@ -1,0 +1,633 @@
+﻿Version     0.0
+Platform    ESP32-P4-70CT-LR
+PlatRes     800x1280
+Depends
+end
+Options
+    Arduino_uSD
+    FQBN                         esp32:esp32:esp32p4_4ds_mipi:Revision=prev3,DebugLevel=none,DisplayModel=esp32p4_70,EraseFlash=none,JTAGAdapter=default,PartitionScheme=app5M_fat24M_32MB,UploadMode=default,UploadSpeed=921600,CDCOnBoot=default,DFUOnBoot=default,MSCOnBoot=default,USBMode=default
+    Speed                        9600
+    Checksum                     No
+    ResponseSize                 2
+    Multidrop                    No
+    Destination                  0
+    DestBank                     0
+    MainForm                     0
+    SndBuf                       0
+    ButtonDisable                No
+    SignedDigits                 No
+    MaxString                    75
+    ComPort                      0
+    ComTX1pinIdx                 0
+    ComRX1pinIdx                 0
+    GCxFormat                    JPEG
+    GCxDest                      Flash
+end
+Form
+    Name                         Form1
+    Alias                        Form1
+    Bgtype                       Image
+    Color                        clWhite
+    Image                        BACKGROUND-1280x800.png
+    Source.Height                800
+    Source.Left                  0
+    Source.Top                   0
+    Source.Width                 1280
+    OnActivate                   ''
+    OnCreate                     ''
+    OnRepeat                     ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+GSlider
+    Name                         Slider1
+    Alias                        Slider1
+    Bevel.BorderColor            clBtnFace
+    Bevel.BorderWidth            0
+    Bevel.InnerColor             BLACK
+    Bevel.InnerHighlight         clBtnHighlight
+    Bevel.InnerOutline           None
+    Bevel.InnerShadow            clBtnShadow
+    Bevel.InnerSpace             1
+    Bevel.InnerStyle             Lowered
+    Bevel.Innerwidth             2
+    Bevel.OuterColor             clBtnFace
+    Bevel.OuterHighlight         clBtnHighlight
+    Bevel.OuterOutline           Outer
+    Bevel.OuterShadow            clBtnShadow
+    Bevel.OuterSpace             0
+    Bevel.OuterStyle             Raised
+    Bevel.Outerwidth             1
+    Bevel.Visible                Yes
+    BorderColor                  clBtnFace
+    BorderWidth                  1
+    Color                        BLACK
+    Height                       345
+    Left                         536
+    Maxvalue                     30
+    Minvalue                     0
+    Orientation                  Vertical
+    Palette.High                 clLime
+    Palette.Low                  0x005100
+    Spacing                      2
+    SolidFill                    Yes
+    TickWidth                    2
+    Top                          72
+    Width                        60
+    OnChanged                    ''
+    OnChanging                   ''
+end
+4Dbutton
+    Name                         4Dbutton1
+    Alias                        4Dbutton1
+    Height                       48
+    Left                         691
+    Matrix                       -1
+    Momentary                    No
+    Size                         48x48
+    Style                        Yellow
+    Top                          87
+    Type                         Button01
+    Width                        48
+    OnChanged                    ''
+end
+4Dbutton
+    Name                         4Dbutton2
+    Alias                        4Dbutton2
+    Height                       48
+    Left                         691
+    Matrix                       -1
+    Momentary                    No
+    Size                         48x48
+    Style                        Yellow
+    Top                          148
+    Type                         Button01
+    Width                        48
+    OnChanged                    ''
+end
+4Dbutton
+    Name                         4Dbutton3
+    Alias                        4Dbutton3
+    Height                       48
+    Left                         691
+    Matrix                       -1
+    Momentary                    No
+    Size                         48x48
+    Style                        Yellow
+    Top                          209
+    Type                         Button01
+    Width                        48
+    OnChanged                    ''
+end
+4Dbutton
+    Name                         4Dbutton4
+    Alias                        4Dbutton4
+    Height                       48
+    Left                         691
+    Matrix                       -1
+    Momentary                    No
+    Size                         48x48
+    Style                        Yellow
+    Top                          270
+    Type                         Button01
+    Width                        48
+    OnChanged                    ''
+end
+4Dbutton
+    Name                         4Dbutton5
+    Alias                        4Dbutton5
+    Height                       48
+    Left                         691
+    Matrix                       -1
+    Momentary                    No
+    Size                         48x48
+    Style                        Yellow
+    Top                          331
+    Type                         Button01
+    Width                        48
+    OnChanged                    ''
+end
+StaticText
+    Name                         Statictext1
+    Alias                        Statictext1
+    Alignment                    Left
+    AutoSize                     Yes
+    Caption                      STATIONS
+    Color                        clWhite
+    Font.Color                   BLACK
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    16
+    Font.Style                   [Bold]
+    Height                       25
+    Left                         905
+    Top                          25
+    Transparent                  Yes
+    Width                        108
+    WordWrap                     Yes
+end
+StaticText
+    Name                         Statictext2
+    Alias                        Statictext2
+    Alignment                    Left
+    AutoSize                     Yes
+    Caption                      'Brian FM'
+    Color                        clWhite
+    Font.Color                   BLACK
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    16
+    Font.Style                   [Bold]
+    Height                       25
+    Left                         747
+    Top                          98
+    Transparent                  Yes
+    Width                        92
+    WordWrap                     Yes
+end
+StaticText
+    Name                         Statictext3
+    Alias                        Statictext3
+    Alignment                    Left
+    AutoSize                     Yes
+    Caption                      'Radio Hauraki'
+    Color                        clWhite
+    Font.Color                   BLACK
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    16
+    Font.Style                   [Bold]
+    Height                       25
+    Left                         748
+    Top                          159
+    Transparent                  Yes
+    Width                        149
+    WordWrap                     Yes
+end
+StaticText
+    Name                         Statictext4
+    Alias                        Statictext4
+    Alignment                    Left
+    AutoSize                     Yes
+    Caption                      'The Rock'
+    Color                        clWhite
+    Font.Color                   BLACK
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    16
+    Font.Style                   [Bold]
+    Height                       25
+    Left                         748
+    Top                          220
+    Transparent                  Yes
+    Width                        96
+    WordWrap                     Yes
+end
+StaticText
+    Name                         Statictext5
+    Alias                        Statictext5
+    Alignment                    Left
+    AutoSize                     Yes
+    Caption                      Magic
+    Color                        clWhite
+    Font.Color                   BLACK
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    16
+    Font.Style                   [Bold]
+    Height                       25
+    Left                         748
+    Top                          281
+    Transparent                  Yes
+    Width                        62
+    WordWrap                     Yes
+end
+StaticText
+    Name                         Statictext6
+    Alias                        Statictext6
+    Alignment                    Left
+    AutoSize                     Yes
+    Caption                      'Newstalk ZB'
+    Color                        clWhite
+    Font.Color                   BLACK
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    16
+    Font.Style                   [Bold]
+    Height                       25
+    Left                         748
+    Top                          343
+    Transparent                  Yes
+    Width                        132
+    WordWrap                     Yes
+end
+StaticText
+    Name                         Statictext7
+    Alias                        Statictext7
+    Alignment                    Left
+    AutoSize                     Yes
+    Caption                      VOLUME
+    Color                        clWhite
+    Font.Color                   clWhite
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    16
+    Font.Style                   [Bold]
+    Height                       25
+    Left                         519
+    Top                          25
+    Transparent                  Yes
+    Width                        90
+    WordWrap                     Yes
+end
+StaticText
+    Name                         Statictext8
+    Alias                        Statictext8
+    Alignment                    Left
+    AutoSize                     Yes
+    Caption                      CONTROLS
+    Color                        clWhite
+    Font.Color                   BLACK
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    16
+    Font.Style                   [Bold]
+    Height                       25
+    Left                         264
+    Top                          470
+    Transparent                  Yes
+    Width                        115
+    WordWrap                     Yes
+end
+4Dbutton
+    Name                         4Dbutton6
+    Alias                        4Dbutton6
+    Height                       48
+    Left                         981
+    Matrix                       -1
+    Momentary                    No
+    Size                         48x48
+    Style                        Yellow
+    Top                          148
+    Type                         Button01
+    Width                        48
+    OnChanged                    ''
+end
+4Dbutton
+    Name                         4Dbutton7
+    Alias                        4Dbutton7
+    Height                       48
+    Left                         981
+    Matrix                       -1
+    Momentary                    No
+    Size                         48x48
+    Style                        Yellow
+    Top                          209
+    Type                         Button01
+    Width                        48
+    OnChanged                    ''
+end
+4Dbutton
+    Name                         4Dbutton8
+    Alias                        4Dbutton8
+    Height                       48
+    Left                         981
+    Matrix                       -1
+    Momentary                    No
+    Size                         48x48
+    Style                        Yellow
+    Top                          270
+    Type                         Button01
+    Width                        48
+    OnChanged                    ''
+end
+4Dbutton
+    Name                         4Dbutton9
+    Alias                        4Dbutton9
+    Height                       48
+    Left                         981
+    Matrix                       -1
+    Momentary                    No
+    Size                         48x48
+    Style                        Yellow
+    Top                          331
+    Type                         Button01
+    Width                        48
+    OnChanged                    ''
+end
+4Dbutton
+    Name                         4Dbutton10
+    Alias                        4Dbutton10
+    Height                       48
+    Left                         981
+    Matrix                       -1
+    Momentary                    No
+    Size                         48x48
+    Style                        Yellow
+    Top                          87
+    Type                         Button01
+    Width                        48
+    OnChanged                    ''
+end
+StaticText
+    Name                         Statictext9
+    Alias                        Statictext9
+    Alignment                    Left
+    AutoSize                     Yes
+    Caption                      'The Sound'
+    Color                        clWhite
+    Font.Color                   BLACK
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    16
+    Font.Style                   [Bold]
+    Height                       25
+    Left                         1037
+    Top                          97
+    Transparent                  Yes
+    Width                        109
+    WordWrap                     Yes
+end
+StaticText
+    Name                         Statictext10
+    Alias                        Statictext10
+    Alignment                    Left
+    AutoSize                     Yes
+    Caption                      'The Generator FM'
+    Color                        clWhite
+    Font.Color                   BLACK
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    16
+    Font.Style                   [Bold]
+    Height                       25
+    Left                         1038
+    Top                          158
+    Transparent                  Yes
+    Width                        187
+    WordWrap                     Yes
+end
+StaticText
+    Name                         Statictext11
+    Alias                        Statictext11
+    Alignment                    Left
+    AutoSize                     Yes
+    Caption                      'Dave FM'
+    Color                        clWhite
+    Font.Color                   BLACK
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    16
+    Font.Style                   [Bold]
+    Height                       25
+    Left                         1038
+    Top                          219
+    Transparent                  Yes
+    Width                        90
+    WordWrap                     Yes
+end
+StaticText
+    Name                         Statictext12
+    Alias                        Statictext12
+    Alignment                    Left
+    AutoSize                     Yes
+    Caption                      'Metal Radio'
+    Color                        clWhite
+    Font.Color                   BLACK
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    16
+    Font.Style                   [Bold]
+    Height                       25
+    Left                         1038
+    Top                          280
+    Transparent                  Yes
+    Width                        125
+    WordWrap                     Yes
+end
+StaticText
+    Name                         Statictext13
+    Alias                        Statictext13
+    Alignment                    Left
+    AutoSize                     Yes
+    Caption                      'The Edge'
+    Color                        clWhite
+    Font.Color                   BLACK
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    16
+    Font.Style                   [Bold]
+    Height                       25
+    Left                         1038
+    Top                          342
+    Transparent                  Yes
+    Width                        95
+    WordWrap                     Yes
+end
+StaticText
+    Name                         Statictext14
+    Alias                        Statictext14
+    Alignment                    Left
+    AutoSize                     Yes
+    Caption                      STATUS
+    Color                        clWhite
+    Font.Color                   BLACK
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    16
+    Font.Style                   [Bold]
+    Height                       25
+    Left                         209
+    Top                          25
+    Transparent                  Yes
+    Width                        82
+    WordWrap                     Yes
+end
+Image
+    Name                         Image1
+    Alias                        Image1
+    Height                       128
+    Image                        '4D Logo no slogan vectors-600dpi.jpg'
+    Left                         724
+    Source.Height                128
+    Source.Left                  0
+    Source.Top                   0
+    Source.Width                 474
+    Top                          520
+    Width                        474
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+StaticText
+    Name                         Statictext15
+    Alias                        Statictext15
+    Alignment                    Left
+    AutoSize                     Yes
+    Caption                      'Internet Radio Demo'
+    Color                        BLACK
+    Font.Color                   OLIVE
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    26
+    Font.Style                   [Bold]
+    Height                       48
+    Left                         784
+    Top                          672
+    Transparent                  Yes
+    Width                        384
+    WordWrap                     Yes
+end
+GSlider
+    Name                         Slider2
+    Alias                        Slider2
+    Bevel.BorderColor            clBtnFace
+    Bevel.BorderWidth            0
+    Bevel.InnerColor             BLACK
+    Bevel.InnerHighlight         clBtnHighlight
+    Bevel.InnerOutline           None
+    Bevel.InnerShadow            clBtnShadow
+    Bevel.InnerSpace             1
+    Bevel.InnerStyle             Lowered
+    Bevel.Innerwidth             2
+    Bevel.OuterColor             clBtnFace
+    Bevel.OuterHighlight         clBtnHighlight
+    Bevel.OuterOutline           Outer
+    Bevel.OuterShadow            clBtnShadow
+    Bevel.OuterSpace             0
+    Bevel.OuterStyle             Raised
+    Bevel.Outerwidth             1
+    Bevel.Visible                Yes
+    BorderColor                  clBtnFace
+    BorderWidth                  1
+    Color                        BLACK
+    Height                       36
+    Left                         88
+    Maxvalue                     14
+    Minvalue                     0
+    Orientation                  Horizontal
+    Palette.High                 clLime
+    Palette.Low                  0x005100
+    Spacing                      8
+    SolidFill                    Yes
+    TickWidth                    8
+    Top                          724
+    Width                        470
+    OnChanged                    ''
+    OnChanging                   ''
+end
+StaticText
+    Name                         Statictext16
+    Alias                        Statictext16
+    Alignment                    Left
+    AutoSize                     Yes
+    Caption                      BRIGHTNESS
+    Color                        clWhite
+    Font.Color                   BLACK
+    Font.Effects                 []
+    Font.Name                    Tahoma
+    Font.Size                    16
+    Font.Style                   [Bold]
+    Height                       25
+    Left                         253
+    Top                          684
+    Transparent                  Yes
+    Width                        139
+    WordWrap                     Yes
+end
+Image
+    Name                         Image2
+    Alias                        Image2
+    Height                       76
+    Image                        VU-Boarder.png
+    Left                         744
+    Source.Height                76
+    Source.Left                  0
+    Source.Top                   0
+    Source.Width                 429
+    Top                          422
+    Width                        429
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+UserButton
+    Name                         Userbutton1
+    Alias                        Userbutton1
+    Height                       150
+    Images                       PLAY-150px.png\nPLAY-150px-dark.png
+    Left                         64
+    Matrix                       -1
+    Momentary                    Yes
+    Stretch                      No
+    Top                          516
+    Width                        150
+    OnChanged                    ''
+end
+UserButton
+    Name                         Userbutton2
+    Alias                        Userbutton2
+    Height                       150
+    Images                       STOP-150px.png\nSTOP-150px-dark.png
+    Left                         248
+    Matrix                       -1
+    Momentary                    Yes
+    Stretch                      No
+    Top                          516
+    Width                        150
+    OnChanged                    ''
+end
+UserButton
+    Name                         Userbutton3
+    Alias                        Userbutton3
+    Height                       150
+    Images                       RECONNECT-150px-V2.png
+    Left                         438
+    Matrix                       -1
+    Momentary                    Yes
+    Stretch                      No
+    Top                          516
+    Width                        150
+    OnChanged                    ''
+end
