@@ -2781,7 +2781,6 @@ int16_t gfx4desp32P4::GetJPEGinfo(int infoType, uint8_t* tArray, uint32_t jpSze)
 
 void gfx4desp32P4::DrawJPEGarray(const uint8_t* image, uint32_t image_size, int x, int y, int w, int h, int altw, int alth){
 	int twO;
-	if (twO == 16) twO = 0;
 	bool swapped = false;
 	int deg = 0;
 	if (altw == -1 || alth == -1){
@@ -2861,6 +2860,7 @@ void gfx4desp32P4::DrawJPEGbuffer(int x, int y, int w, int h, int twO, int altw,
 	if (twO == 16) twO = 0;
 	bool swapped = false;
 	int deg = 0;
+	/*
 	if(transparency || alpha){
 		uint32_t pos = 0;
 		SetGRAM (x, y, w, h);
@@ -2869,11 +2869,12 @@ void gfx4desp32P4::DrawJPEGbuffer(int x, int y, int w, int h, int twO, int altw,
 			pos += (w + twO);
 		}
 	} else {
+		*/
 		uint16_t* tpto = (uint16_t*)SelectFB(frame_buffer);
 		uint16_t* pto = (uint16_t*)rx_buf;
 		TranslateCoords(x, y, altw, alth, deg, frame_buffer);
 		ppaAccelerator.scaleRotateImageFB(pto, w, h, 0, 0, w, h, tpto, altw, alth, false, _translated[TRANS_DEG], false, false, _translated[TRANS_X], _translated[TRANS_Y], twO, 0, colorFMT24 & (frame_buffer == 0), frame_buffer == CANVAS_BUFFER_ARGB);
-	}
+	//}
 }
 
 /****************************************************************************/
@@ -9502,7 +9503,7 @@ void gfx4desp32P4::AngularScale(int x, int y, int sa, int ea, int ticks, int tic
     if (!(n % tickChange) && ticksMajor > 0){
       Orbit(tpos, ticksMajorRadius, xy1);
       Orbit(tpos, ticksMajorRadius + tickMajorLen, xy2);
-      if(tickMajorW > 0) LineAA(xy1[0], xy1[1], xy2[0], xy2[1], 2, 2, tickMajorColor);
+      if(tickMajorW > 0) LineAA(xy1[0], xy1[1], xy2[0], xy2[1], tickMajorW, tickMajorW, tickMajorColor);
       if(hasValues){
 	    Orbit(tpos, valueRadius, xy1);
         TextColor(textColor, textColor);
@@ -9525,7 +9526,7 @@ void gfx4desp32P4::AngularScale(int x, int y, int sa, int ea, int ticks, int tic
     } else {
       Orbit(tpos, tickRadius, xy1);
       Orbit(tpos, tickRadius + tickLen, xy2);
-      if(tickW > 0) LineAA(xy1[0], xy1[1], xy2[0], xy2[1], 1, 1, tickColor);
+      if(tickW > 0) LineAA(xy1[0], xy1[1], xy2[0], xy2[1], tickW, tickW, tickColor);
     }
     tpos += tickGap;
   }
@@ -10284,7 +10285,6 @@ void gfx4desp32P4::SetBlendCanvasDimensions(int w, int h){
 }
 
 void gfx4desp32P4::ShowCanvas(int x, int y, int w, int h, int tx, int ty){
-	//if (rotation != 0) return;
 	int ttx, tty, ttw, tth;
 	int fbtemp = frame_buffer;
 	if (x < 0) x = 0; 
@@ -10293,7 +10293,6 @@ void gfx4desp32P4::ShowCanvas(int x, int y, int w, int h, int tx, int ty){
 	if ((y + h - 1) > __canvasHeight) y =  __canvasHeight - h - 1;
 	uint16_t* tpto = (uint16_t*)SelectFB(frame_buffer);
 	uint16_t* pto = (uint16_t*)SelectFB(CANVAS_BUFFER);
-	//DrawToframebuffer(CANVAS_BUFFER);
 	TranslateCoords(x, y, w, h, 0, CANVAS_BUFFER);
 	ttx = _translated[TRANS_X];
 	tty = _translated[TRANS_Y];
@@ -10310,7 +10309,6 @@ void gfx4desp32P4::ShowCanvas(int x, int y, int w, int h, int tx, int ty){
 }
 
 void gfx4desp32P4::ShowCanvas(int fb, int fb2, int px, int py, int x, int y, int w, int h, int tx, int ty){
-	//if (rotation != 0) return;
 	int ttx, tty, ttw, tth;
 	int ppx, ppy, ppw, pph;
 	int fbtemp = frame_buffer;
@@ -10328,7 +10326,6 @@ void gfx4desp32P4::ShowCanvas(int fb, int fb2, int px, int py, int x, int y, int
 	uint16_t* pto2 = (uint16_t*)SelectFB(fb2);
 	uint16_t* pto = (uint16_t*)SelectFB(fb);
 	if (fb2 == CANVAS_BUFFER_ARGB) setARGB = true;
-	//DrawToframebuffer(CANVAS_BUFFER);
 	TranslateCoords(px, py, w, h, 0, fb);
 	ppx = _translated[TRANS_X];
 	ppy = _translated[TRANS_Y];
@@ -10342,7 +10339,6 @@ void gfx4desp32P4::ShowCanvas(int fb, int fb2, int px, int py, int x, int y, int
 	TranslateCoords(tx, ty, w, h, 0, frame_buffer);
 	DrawToframebuffer(fbtemp);
 	if (colorFMT24) opFMT = 1;
-	//ppaAccelerator.scaleRotateImageFB(pto, altst_hres, altst_vres, ttx, tty, ttw, tth, tpto, _translated[TRANS_W], _translated[TRANS_H], false, /*_translated[TRANS_DEG]*/0, false, false, _translated[TRANS_X], _translated[TRANS_Y], 0, 0, colorFMT24, frame_buffer == CANVAS_BUFFER_ARGB);
 	ppaAccelerator.blend(pto, sfb_hres, sfb_vres, ppx, ppy, ppw, pph, pto2, altst_hresARGB, altst_vresARGB, ttx, tty, ttw, tth, tpto, _translated[TRANS_W], _translated[TRANS_H], false, _translated[TRANS_X], _translated[TRANS_Y], colorFMT24, setARGB, opFMT);
 	__canvasPXposARGB = px; __canvasPYposARGB = py;
 	__canvasFBARGB = fb; __canvasFB2ARGB = fb2;
@@ -10385,14 +10381,14 @@ void gfx4desp32P4::setJPEGinputBufferSize(uint32_t s){
 /****************************************************************************/
 /*!
   @brief  Opens a MJPEG video file and set playback parameters
-  @param  fname - URL of MJPEG file stored in uSD
+  @param  fname - name of MJPEG file stored in uSD
   @param  x - x top left position of video
   @param  y - y top left position
   @param  TargetFPS - Target FPS, may not meet this target dependant on size
   @param  altw - width to be scaled to
   @param  alth - height to be scaled to
   @param  bool - true if video restarts at the end
-  @returns true if vido open successful
+  @returns true if video open successful
 */
 /****************************************************************************/
 bool gfx4desp32P4::OpenMJPEGvideoFile(String fname, int x, int y, float TargetFPS, int altw, int alth, bool loop){
@@ -10432,7 +10428,6 @@ bool gfx4desp32P4::OpenMJPEGvideoArray(uint8_t* array, uint32_t arraySize, int x
 
 void gfx4desp32P4::OpenMJPEGvideo(float Tfps, int x, int y, int altw, int alth){
 	_videoDel = 1;
-	_videoTnow = millis();
 	if (!_videoBufInit){
 		_videoBuf = (uint8_t*)heap_caps_aligned_alloc(64, MJPEG_BUFFER_SIZE, MALLOC_CAP_DMA | MALLOC_CAP_SPIRAM);
 		_videoBufInit = true;
@@ -10459,6 +10454,8 @@ void gfx4desp32P4::OpenMJPEGvideo(float Tfps, int x, int y, int altw, int alth){
 	_videoSkippedFrames = 0;
 	_videAspectDone = false;
 	_videoTofset = 0;
+	_videoTnow = micros();
+	if(!JPEGinit) InitializeJPEG();
 }
 
 /****************************************************************************/
@@ -10509,21 +10506,20 @@ int gfx4desp32P4::MJPEGgetHeight(){
 
 /****************************************************************************/
 /*!
-  @brief  Play the next frame of previously opened MJPEG vide file
+  @brief  Play the next frame of previously opened MJPEG video file
   @returns The number of current video frame
 */
 /****************************************************************************/
 int64_t gfx4desp32P4::PlayMJPEGnextFrame(bool frcSW){
-	uint32_t httpmjpegAvail; 
+	bool gotStart = false;
 	_videoWaitTime = micros() - _videoTnow;
 	if (_videoWaitTime < (_videoTFtimeInt - _videoTofset)) return _videoFrameNum;
 	_videoTnow = micros();
 	if (_videoFrameNum > 0) _videoTofset += (_videoWaitTime - _videoTFtimeInt) ;
 	if(!_videoOK) return 0;
 	if((_videoAddr < _videoFileSize || _videoChunk > 1) || _videoFileSize == -1){
-		if (_videoChunk && _videoSource == MJPEG_VIDEO_FILE){
-			if (_videoChunk > 0) mjpeg.read(_videoBuf + _videoOfst, _videoChunk);
-		} else if (_videoSource == MJPEG_VIDEO_ARRAY){
+		if (_videoChunk > 0) mjpeg.read(_videoBuf + _videoOfst, _videoChunk);
+		if (_videoSource == MJPEG_VIDEO_ARRAY){
 			if (_videoChunk > 0) memcpy(_videoBuf + _videoOfst, _videoArray + _videoArrayPos, _videoChunk);
 			_videoArrayPos += _videoChunk;
 		}
@@ -10546,6 +10542,7 @@ int64_t gfx4desp32P4::PlayMJPEGnextFrame(bool frcSW){
 					_videoRestarting = true;
 				} else {
 					_videoRestarting = false;
+					//CloseMJPEGvideo();
 					return MJPEG_FILE_END;
 				}
 			}
@@ -10555,10 +10552,21 @@ int64_t gfx4desp32P4::PlayMJPEGnextFrame(bool frcSW){
 			_videoPos += 1;
 			_videoFrameNum ++;
 			_videoAddr += _videoPos;
+			for (int n = 0; n < 2000; n++){
+				if(n > 0){
+					if(_videoBuf[n] == 0xd8 && _videoBuf[n-1] == 0xff){
+						_videoFrameStartOffset = n - 1;
+					    gotStart = true;
+						break;
+					}
+				}							
+			}
+			if (!gotStart) _videoFrameNum = 0;
 			if (((_videoW * _videoH) << 1) > JPEGoutputbufferSize) return MJPEG_SIZE_EXCEEDS_BUFFER;
 			if (_videoPos > MJPEG_BUFFER_SIZE) return MJPEG_INPUT_SIZE_TOO_BIG;
+			if (_videoBuf[_videoFrameStartOffset + _videoPos - _videoFrameStartOffset - 1] != 0xff || _videoBuf[_videoFrameStartOffset + _videoPos - _videoFrameStartOffset + 0] != 0xd9) _videoFrameNum = 0;
 			if (_videoFrameNum > 0){
-				DecodeJPEGfromArray(_videoBuf/* + _videoFrameStartOffset*/, _videoPos - _videoFrameStartOffset + 2, _videoW, _videoH, frcSW);
+				twO = DecodeJPEGfromArray(_videoBuf + _videoFrameStartOffset, _videoPos - _videoFrameStartOffset + 0, _videoW, _videoH, frcSW);
 				_videoW = _jpegWidth ;
 				_videoH = _jpegHeight;
 			}
@@ -10577,23 +10585,34 @@ int64_t gfx4desp32P4::PlayMJPEGnextFrame(bool frcSW){
 		_videoRestarting = false;
 		if (_videoFrameNum == 1){
 			if (_videoKeepAspect && _videAspectDone == false){
-				if(_jpegWidth > _jpegHeight){
-					float asp = (float)_jpegHeight / (_jpegWidth);
-					float nh = (float)_videoAltw * asp;
-					int oldvh = _videoAlth;
-					_videoAlth = nh;
-					int barsht = (oldvh - _videoAlth) / 2;
-					RectangleFilledPPA(_videoX, _videoY, _videoX + _videoAltw - 1, _videoY + oldvh - 1, BLACK);
-					_videoY += barsht;
-				}				
-				if(_jpegWidth < _jpegHeight){
-					float asp = (float)_jpegWidth / _jpegHeight;
-					float nw = (float)_videoAlth * asp;
-					int oldvw = _videoAltw;
-					_videoAltw = nw;
-					int barsht = (oldvw - _videoAltw) / 2;
-					RectangleFilledPPA(_videoX, _videoY, _videoX + oldvw - 1, _videoY + _videoAlth - 1, BLACK);
-					_videoX += barsht;
+				float aspSrc = ((float)_jpegWidth) / (float)_jpegHeight;
+				float aspDes = (float)_videoAltw / (float)_videoAlth;
+				if (aspSrc == 1 && aspDes > aspSrc){
+					RectangleFilledPPA(_videoX, _videoY, _videoX + _videoAltw - 1, _videoY + _videoAlth - 1, BLACK);
+					int nh = _videoAltw;
+					_videoAltw = _videoAlth;
+					_videoX += ((nh - _videoAltw) / 2) + (twO / 2);
+				} else if (aspSrc == 1 && aspDes < aspSrc){
+				    RectangleFilledPPA(_videoX, _videoY, _videoX + _videoAltw - 1, _videoY + _videoAlth - 1, BLACK);	
+					int nh = _videoAlth;
+					_videoAlth = _videoAltw;
+					_videoX += (twO / 2); 
+					_videoY += ((nh - _videoAlth) / 2);
+				} else if (aspSrc > 1 && aspDes > aspSrc){
+					RectangleFilledPPA(_videoX, _videoY, _videoX + _videoAltw - 1, _videoY + _videoAlth - 1, BLACK);
+					int nh = _videoAltw;
+					float vaw; // = _videoAltw;
+					vaw = (float)_videoAlth * aspSrc;
+					_videoX += ((nh - vaw) / 2) + (twO / 2);
+					_videoAltw = vaw;
+				} else if (aspSrc > 1 && aspDes < aspSrc){
+					RectangleFilledPPA(_videoX, _videoY, _videoX + _videoAltw - 1, _videoY + _videoAlth - 1, BLACK);
+					int nh = _videoAlth;
+					float vah; //= _videoAlth;
+					vah = (float)_videoAltw / aspSrc;
+					_videoY += ((nh - vah) / 2);
+					_videoX += (twO / 2); 
+					_videoAlth = vah;
 				}
 				_videAspectDone = true;
 			}
@@ -10607,13 +10626,12 @@ int64_t gfx4desp32P4::PlayMJPEGnextFrame(bool frcSW){
 /*!
   @brief  Draws a JPEG image that may be embedded in a file 
   @param  tfile - the file that was openend previously - will return if not opened
-  @param  top - the position in the file. Can be 0 if file contains 1 JPEG image
+  @param  tpos - the position in the file. Can be 0 if file contains 1 JPEG image
   @param  x - x position to draw the decoded image
   @param  y - y position to draw the decoded image
   @param  forceSoft - bool true if the software JPEG decoder is preferred
   @param  altw - the scaled width of the image (optional)
   @param  alth - the scaled height of the image (optional)
-  @returns true if vido open successful
 */
 /****************************************************************************/
 void gfx4desp32P4::DrawJPEGinFile(File tfile, uint32_t tpos, uint32_t tfsize, int x, int y, bool forceSoft, int altw, int alth){
@@ -10654,6 +10672,72 @@ void gfx4desp32P4::DrawJPEGinFile(File tfile, uint32_t tpos, uint32_t tfsize, in
 	}
 }
 
+/****************************************************************************/
+/*!
+  @brief  Prints a JPEG image that may be embedded in a file to current cursor position 
+  @param  tfile - the file that was openend previously - will return if not opened
+  @param  tpos - the position in the file. Can be 0 if file contains 1 JPEG image
+  @param  forceSoft - bool true if the software JPEG decoder is preferred
+  @param  altw - the scaled width of the image (optional)
+  @param  alth - the scaled height of the image (optional)
+*/
+/****************************************************************************/
+void gfx4desp32P4::PrintJPEGinFile(File tfile, uint32_t tpos, uint32_t tfsize, bool forceSoft, int altw){
+	if (!tfile) return;
+	if (!JPEGinit) InitializeJPEG();
+	int x = 0;
+	int y = 0;
+	int alth;
+	if (forceSoft){
+		if (jpegConfig == false){
+			if (!JPEGinit) InitializeJPEG();
+			jpeg_cfg.outbuf = (uint8_t *)rx_buf;
+			jpeg_cfg.outbuf_size = rx_buffer_size;
+			jpeg_cfg.indata = (uint8_t *)JPEGinp;
+			jpeg_cfg.out_format = JPEG_IMAGE_FORMAT_RGB565;
+			jpeg_cfg.out_scale = JPEG_IMAGE_SCALE_0;
+			jpeg_cfg.flags.swap_color_bytes = 0;
+			jpegConfig = true;
+		}
+		jpeg_cfg.indata_size = tfsize;
+		jpeg_cfg.indata = (uint8_t *)JPEGinp;
+		tfile.seek(tpos);
+		tfile.read(JPEGinp, tfsize);
+		esp_jpeg_decode(&jpeg_cfg, &outimg);
+		JPEGiSize[0] = outimg.width;
+		JPEGiSize[1] = outimg.height;
+	} else {
+		uint32_t out_size = 0;
+	    tfile.seek(tpos);
+	    tfile.read(tx_buf, tfsize);
+	    jpeg_decoder_get_info(tx_buf, tfsize, &header_info);
+	    JPEGiSize[0] = header_info.width;
+	    JPEGiSize[1] = header_info.height;
+		jpeg_decoder_process(jpgd_handle, &decode_cfg_rgb, tx_buf, tfsize, rx_buf, rx_buffer_size, &out_size);
+	}
+	int ttwO = 0;
+	if (altw == -1){
+		int lineWidth = textXmax - cursor_x;
+		if (JPEGiSize[0] > lineWidth){
+			altw = lineWidth - 1;
+		} else {
+			altw = JPEGiSize[0] - 1;
+		}
+	}
+	float div = (float) altw / (float)JPEGiSize[0];
+    float th = (float)JPEGiSize[1] * div;
+	alth = th;
+	int tfb = frame_buffer;  	
+	DrawToframebuffer(WIDGET_BUFFER);
+	if (altw != -1){
+		DrawJPEGbuffer(x, y, JPEGiSize[0], JPEGiSize[1], ttwO, altw, alth);
+	} else {
+		DrawJPEGbuffer(x, y, JPEGiSize[0], JPEGiSize[1], ttwO, JPEGiSize[0], JPEGiSize[1]);
+	}
+	DrawToframebuffer(tfb);
+	PrintImageFromFrameBuffer(WIDGET_BUFFER, 0, 0, altw - ttwO - 1, alth - 1, FontHeight());
+}
+
 void gfx4desp32P4::InitializeJPEG(){
     decode_eng_cfg = {
         .timeout_ms = 40,
@@ -10682,6 +10766,15 @@ void gfx4desp32P4::InitializeJPEG(){
     JPEGinit = true;
 }
 
+/****************************************************************************/
+/*!
+  @brief  merge 2 frame buffers to selected frame buffer
+  @param  fbto - target frame buffer
+  @param  fbfrom1 - source buffer 1
+  @param  fbfrom2 - source buffer 2
+  @param  alph - alpha blending level
+*/
+/****************************************************************************/
 void gfx4desp32P4::MergeFrameBuffersPPA(uint8_t fbto, uint8_t fbfrom1, uint8_t fbfrom2, int alph) {
 	ppaAccelerator.setTransAlpha(BLACK, true, alph, alph != 255);
 	int sfb_hres = st_hres; int sfb_vres = st_vres;
@@ -10711,5 +10804,3 @@ void gfx4desp32P4::MergeFrameBuffersPPA(uint8_t fbto, uint8_t fbfrom1, uint8_t f
 	if (colorFMT24) opFMT = 1;
 	ppaAccelerator.blend(pto, sfb_hres, sfb_vres, ppx, ppy, ppw, pph, pto2, st_hres, st_vres, ttx, tty, ttw, tth, tpto, _translated[TRANS_W], _translated[TRANS_H], false, _translated[TRANS_X], _translated[TRANS_Y], colorFMT24, setARGB, opFMT);
 }
-	
-

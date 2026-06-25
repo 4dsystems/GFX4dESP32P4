@@ -2351,8 +2351,6 @@ void gfx4desp32_mipi_panel::WrGRAM(uint16_t color) {
         }
         pixelPos++;
     }
-    //if (pixelPos >= pixelCount &&
-    //    frame_buffer == visibleFB) { // if GRAM area is written to flush the area.
     if (pixelPos >= pixelCount){
 		wrGRAM = false;
 		if(rotation == 0) FlushArea(GRAMy1, GRAMy2, -1); 
@@ -2408,6 +2406,7 @@ uint16_t gfx4desp32_mipi_panel::ReadPixelFromFrameBuffer(uint16_t xrp, uint16_t 
         return 0;
     uint8_t* tpto = SelectFB(fB);
     uint8_t* pto;
+	uint16_t tcol;
 	int mul = 1;
 	if (fB == CANVAS_BUFFER_ARGB) mul = 2;
     if (rotation == 0)
@@ -2423,7 +2422,12 @@ uint16_t gfx4desp32_mipi_panel::ReadPixelFromFrameBuffer(uint16_t xrp, uint16_t 
     }
     if (rotation == 2)
         pto = tpto + (yrp << mul) + ((__scrHeight - xrp - 1) * __scrWidth);
-    return pto[0] + (pto[1] << 8);
+    if (mul == 2){
+		tcol = ((pto[2] & 0xf8) << 8) + ((pto[1] & 0xfc) << 3) + ((pto[0] & 0xf8) >> 3);
+	} else {
+		tcol = pto[0] + (pto[1] << 8); 
+	}
+	return tcol;
 }
 
 /****************************************************************************/
@@ -2452,35 +2456,67 @@ uint16_t gfx4desp32_mipi_panel::ReadLine(int16_t x, int16_t y, int16_t w,
     uint8_t* pto;
     int pc = 0;
     int readw = w;
-    if (rotation == 0) {
-        pto = tpto + (y * __scrWidth) + (x << 1);
-        while (w--) {
-            data[pc++] = pto[0] + (pto[1] << 8);
-            pto += 2;
-        }
-    }
-    if (rotation == 1) {
-        pto = tpto + ((__scrHeight - y - 1) * __scrWidth) +
-            (__scrWidth - ((x + 1) << 1));
-        while (w--) {
-            data[pc++] = pto[0] + (pto[1] << 8);
-            pto -= 2;
-        }
-    }
-    if (rotation == 3) {
-        pto = tpto + (__scrWidth - ((y + 1) << 1)) + (x * __scrWidth);
-        while (w--) {
-            data[pc++] = pto[0] + (pto[1] << 8);
-            pto += __scrWidth;
-        }
-    }
-    if (rotation == 2) {
-        pto = tpto + (y << 1) + ((__scrHeight - x - 1) * __scrWidth);
-        while (w--) {
-            data[pc++] = pto[0] + (pto[1] << 8);
-            pto -= __scrWidth;
-        }
-    }
+	if (frame_buffer == CANVAS_BUFFER_ARGB){
+		if (rotation == 0) {
+			pto = tpto + (y * __scrWidth) + (x << 2);
+			while (w--) {
+				data[pc++] = ((pto[2] & 0xf8) << 8) + ((pto[1] & 0xfc) << 3) + ((pto[0] & 0xf8) >> 3);
+				pto += 4;
+			}
+		}
+		if (rotation == 1) {
+			pto = tpto + ((__scrHeight - y - 1) * __scrWidth) +
+				(__scrWidth - ((x + 1) << 2));
+			while (w--) {
+				data[pc++] = ((pto[2] & 0xf8) << 8) + ((pto[1] & 0xfc) << 3) + ((pto[0] & 0xf8) >> 3);
+				pto -= 4;
+			}
+		}
+		if (rotation == 3) {
+			pto = tpto + (__scrWidth - ((y + 1) << 2)) + (x * __scrWidth);
+			while (w--) {
+				data[pc++] = ((pto[2] & 0xf8) << 8) + ((pto[1] & 0xfc) << 3) + ((pto[0] & 0xf8) >> 3);
+				pto += __scrWidth;
+			}
+		}
+		if (rotation == 2) {
+			pto = tpto + (y << 2) + ((__scrHeight - x - 1) * __scrWidth);
+			while (w--) {
+				data[pc++] = ((pto[2] & 0xf8) << 8) + ((pto[1] & 0xfc) << 3) + ((pto[0] & 0xf8) >> 3);
+				pto -= __scrWidth;
+			}
+		}
+	} else {
+		if (rotation == 0) {
+			pto = tpto + (y * __scrWidth) + (x << 1);
+			while (w--) {
+				data[pc++] = pto[0] + (pto[1] << 8);
+				pto += 2;
+			}
+		}
+		if (rotation == 1) {
+			pto = tpto + ((__scrHeight - y - 1) * __scrWidth) +
+				(__scrWidth - ((x + 1) << 1));
+			while (w--) {
+				data[pc++] = pto[0] + (pto[1] << 8);
+				pto -= 2;
+			}
+		}
+		if (rotation == 3) {
+			pto = tpto + (__scrWidth - ((y + 1) << 1)) + (x * __scrWidth);
+			while (w--) {
+				data[pc++] = pto[0] + (pto[1] << 8);
+				pto += __scrWidth;
+			}
+		}
+		if (rotation == 2) {
+			pto = tpto + (y << 1) + ((__scrHeight - x - 1) * __scrWidth);
+			while (w--) {
+				data[pc++] = pto[0] + (pto[1] << 8);
+				pto -= __scrWidth;
+			}
+		}
+	}
     return readw;
 }
 
@@ -2542,10 +2578,6 @@ void gfx4desp32_mipi_panel::WriteLine(int16_t x, int16_t y, int16_t w,
     }
     if ((x + w - 1) > clipx2)
         w = clipx2 - x + 1;
-	//if(!transalpha){
-	//    PPAflushArea(data + ofst, w, 1, x, y, false);	
-	//	return;
-	//}
     uint8_t* tpto = SelectFB(frame_buffer);
     uint8_t* pto;
     uint8_t colM, colL;
@@ -2780,35 +2812,47 @@ void gfx4desp32_mipi_panel::setScrollArea(int x1, int y1, int x2, int y2) {
     scroll_window_store_y1 = y1;
     scroll_window_store_x2 = x2;
     scroll_window_store_y2 = y2;
-	uint16_t tt_hres = st_hres;
-	uint16_t tt_vres = st_vres;
+	/*
+	int tt_hres = st_hres;
+	int tt_vres = st_vres;
 	if (frame_buffer == CANVAS_BUFFER) {
 		tt_hres = altst_hres;
 		tt_vres = altst_vres;
 	} else if (frame_buffer == CANVAS_BUFFER_ARGB){
 		tt_hres = altst_hresARGB;
 		tt_vres = altst_vresARGB;
-	}	
-    if (rotation < 2) {
+	}
+    */	
+	/*
+	if (rotation < 2) {
         if (scroll_window_store_x1 < 0)
             scroll_window_store_x1 = 0;
-        if (scroll_window_store_x2 > (int)tt_hres - 1)
-            scroll_window_store_x2 = (int)tt_hres - 1;
+        if (scroll_window_store_x2 > tt_hres - 1)
+            scroll_window_store_x2 = tt_hres - 1;
         if (scroll_window_store_y1 < 0)
             scroll_window_store_y1 = 0;
-        if (scroll_window_store_y2 > (int)tt_vres - 1)
-            scroll_window_store_y2 = (int)tt_vres - 1;
+        if (scroll_window_store_y2 > tt_vres - 1)
+            scroll_window_store_y2 = tt_vres - 1;
     }
     else {
         if (scroll_window_store_x1 < 0)
             scroll_window_store_x1 = 0;
-        if (scroll_window_store_x2 > (int)tt_vres - 1)
-            scroll_window_store_x2 = (int)tt_vres - 1;
+        if (scroll_window_store_x2 > tt_vres - 1)
+            scroll_window_store_x2 = tt_vres - 1;
         if (scroll_window_store_y1 < 0)
             scroll_window_store_y1 = 0;
-        if (scroll_window_store_y2 > (int)tt_hres - 1)
-            scroll_window_store_y2 = (int)tt_hres - 1;
+        if (scroll_window_store_y2 > tt_hres - 1)
+            scroll_window_store_y2 = tt_hres - 1;
     }
+	*/
+	if (scroll_window_store_x1 < 0)
+        scroll_window_store_x1 = 0;
+    if (scroll_window_store_x2 > __width - 1)
+        scroll_window_store_x2 = __width - 1;
+    if (scroll_window_store_y1 < 0)
+        scroll_window_store_y1 = 0;
+    if (scroll_window_store_y2 > __height - 1)
+        scroll_window_store_y2 = __height - 1;
 	if (scroll_Enable) _ScrollEnable(true);
 }
 
@@ -3359,7 +3403,8 @@ uint8_t* gfx4desp32_mipi_panel::SelectFB(uint8_t sel) {
 }
 
 void gfx4desp32_mipi_panel::AllocateDRcache(uint32_t cacheSize) {
-    psRAMbuffer2 = (uint8_t*)ps_malloc(cacheSize);
+    psRAMbuffer2 = (uint8_t*)heap_caps_aligned_alloc(64, cacheSize, MALLOC_CAP_DMA | MALLOC_CAP_SPIRAM);
+	//psRAMbuffer2 = (uint8_t*)ps_malloc(cacheSize);
     cache_Enabled = true;
 }
 
