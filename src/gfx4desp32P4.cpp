@@ -8248,8 +8248,9 @@ void gfx4desp32P4::imageSetWord(uint16_t img, byte controlIndex, int val1, int v
 		break;
 	case IMAGE_SCALE_WIDTH_AND_HEIGHT:
 		if (val1 > __width) val1 = __width;
-		if (val1 > __height) val2 = __height;
+		if (val2 > __height) val2 = __height;
 		tuScaleXY[img] = val1 + (val2 << 16);
+		break;
     }
 }
 
