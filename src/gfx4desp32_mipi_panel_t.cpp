@@ -51,6 +51,15 @@ void gfx4desp32_mipi_panel_t::touch_Set(uint8_t mode, bool aint) {
 			} else {
 			  ts.begin(5, 4, 0x14, 400000);
 			}
+			if (t_controller == 4){
+				preferences.begin("touchFWSet", false);
+				bool tstFW = preferences.getBool("FWset", 0);
+				if (tstFW != true){
+				    ts.fwWrite(GT967_800_800, 226, t_controller);
+					preferences.putBool("FWset", true);
+				}
+				preferences.end();
+			}
 			if (mode == TOUCH_FW_WRITE){
 				if (t_controller == 3) ts.fwWrite(GT967_720_720, 226, t_controller);
 				if (t_controller == 4) ts.fwWrite(GT967_800_800, 226, t_controller);
@@ -61,15 +70,11 @@ void gfx4desp32_mipi_panel_t::touch_Set(uint8_t mode, bool aint) {
 				ts.SetRotation(trotate);
 			}
 		}
-		if (t_controller == 0){
-			//Wire.begin(7, 8, 400000);
-			//ts.fwResolution(1280, 800);
-		}
     }
     else {
         _TouchEnable = false;
     }
-	//if (t_controller == 3) t_controller = 1;
+
 }
 
 int gfx4desp32_mipi_panel_t::touch_GetTouchPoints(int* tpx, int* tpy){
@@ -130,11 +135,10 @@ int gfx4desp32_mipi_panel_t::touch_GetTouchPoints(int* tpx, int* tpy){
 */
 /****************************************************************************/
 bool gfx4desp32_mipi_panel_t::touch_Update() {
-    bool intStatus = digitalRead(GFX4d_TOUCH_INT);
+	bool intStatus = digitalRead(GFX4d_TOUCH_INT);
     // *** if touch is not enabled and no touch int or touch status is not no touch
     // then just return ***
     // *** need to create touch release state before no touch ***
-	if (alt_int) intStatus = 0;
     if (!_TouchEnable || (intStatus && tPen == 0))
         return false;
     bool update = false;

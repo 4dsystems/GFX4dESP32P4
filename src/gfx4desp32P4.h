@@ -10,15 +10,12 @@
 
 #define DISABLE_WIFI_FUNCTIONS
 
-//#ifndef DISABLE_WIFI_FUNCTIONS
+#ifndef DISABLE_WIFI_FUNCTIONS
 #include "WiFiClient.h"
 #include "WiFiClientSecure.h"
-//#endif
-
+#endif
 
 #include "esp_err.h"
-
-//#include <esp_display_panel.hpp>
 
 #include "esp_lcd_types.h"
 #include "esp_log.h"
@@ -38,14 +35,8 @@
 
 #include "rom/cache.h"
 
-//**** Uncomment below if LittleFS File sysem is used instead of uSD ****
-// #define USE_LITTLEFS_FILE_SYSTEM
-//#define LITTLEFS_FORMAT_ON_FAIL
-
-//**** Uncomment below if SD_MMC File sysem is used instead of SdFat. Note, SPI is not available to user on RGB displays when SDMMC is enabled ****
 #define USE_SDMMC_FILE_SYSTEM
 
-//**** Uncomment below if external SDMMC slot is used instead of on-board slot, Note, not available on RGB displays ****
 #define SDMMC_4BIT
 
 #include "gfx4desp32_types.h"
@@ -350,7 +341,6 @@
 
 #define MJPEG_VIDEO_ARRAY			0x00
 #define MJPEG_VIDEO_FILE			0x01
-#define MJPEG_VIDEO_STREAM			0x02
 
 #define GFX4d_FILE_WRITE            0x14 // unused
 
@@ -1159,7 +1149,6 @@ public:
     void HlineX(int x, int y, int w, int32_t color);
     void VlineX(int x, int y, int w, int32_t color);
     void RectangleFilledX(int x0, int y0, int x1, int y1, int32_t color);
-	//virtual void RectangleFilledPPA(int x1, int y1, int x2, int y2, uint32_t color) override;
     void LineAA(float xpos1, float ypos1, float xpos2, float ypos2, float xy1r, float xy2r, int32_t fg_color);
     void CircleFilledAA(float x, float y, float r, uint32_t color);
     void LineAA(float x, float y, float x1, float y1, float w, uint32_t color);
@@ -1189,6 +1178,7 @@ public:
 	void BlendAlphaBufferLevel(bool bl);
 	int64_t PlayMJPEGnextFrame(bool frcSW = false);
 	void DrawJPEGinFile(File tfile, uint32_t tpos, uint32_t tfsize, int x, int y, bool forceSoft, int altw = -1, int alth = -1);
+	void PrintJPEGinFile(File tfile, uint32_t tpos, uint32_t tfsize, bool forceSoft, int altw = -1);
 	uint16_t getLastJPEGwidth(void);
 	uint16_t getLastJPEGheight(void);
 	uint16_t getLastJPEGpaddingWidth(void);
@@ -1333,7 +1323,7 @@ public:
     bool gradientVert;
     int SpriteBKGfbNUM;
     bool clippingON;
-    uint16_t linebuff[1280];
+    uint16_t linebuff[2480];
     int textXmin, textXmax;
 	int textXminBAK, textXmaxBAK;
     int16_t cursor_x, cursor_y;
@@ -1464,6 +1454,7 @@ public:
 	uint16_t lastJPEGpadding;
 	uint32_t JPEGsoftInpBuffSize;
 	uint32_t JPEGhardInpBuffSize;
+
 };
 
 #endif

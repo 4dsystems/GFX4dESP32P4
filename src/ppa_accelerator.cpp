@@ -111,7 +111,7 @@ void PPAAccelerator::setTransAlpha(uint16_t tcol, bool tEN, uint8_t alphVal, boo
 bool PPAAccelerator::blockFill(int16_t fbWidth, int16_t fbHeight, int fbx, int fby, int16_t fbw, int16_t fbh, uint16_t* dstPixels, uint16_t color, int alphB, bool fmt24, bool argb){
     ppa_client_config_t ppa_fill_config = {
         .oper_type = PPA_OPERATION_FILL,
-        .max_pending_trans_num = 1,
+        .max_pending_trans_num = 20,
     };
 	if(!ppa_fill_handle) ppa_register_client(&ppa_fill_config, &ppa_fill_handle);
 	if (!ppa_fill_handle) {
@@ -153,7 +153,7 @@ bool PPAAccelerator::scaleRotateImageFB(uint16_t* srcPixels, int32_t fbWidth, in
                                      bool bSwap, float rotation, bool mirX, bool mirY, int x, int y, int ofstw, int ofsth, bool fmt24, bool argb, int inrgb) {
 	ppa_client_config_t ppa_client_config = {
         .oper_type = PPA_OPERATION_SRM,  // Scaling, Rotating, and Mirror operations
-		.max_pending_trans_num = 10,
+		.max_pending_trans_num = 20,
     };
 	if(!ppa_scaling_handle) ppa_register_client(&ppa_client_config, &ppa_scaling_handle);
 	if (!ppa_scaling_handle) {
@@ -200,8 +200,8 @@ bool PPAAccelerator::scaleRotateImageFB(uint16_t* srcPixels, int32_t fbWidth, in
 	}
 	srm_oper_config.rotation_angle = ppa_rotation;
 		
-	srm_oper_config.scale_x = (float)dstWidth / srcWidth;
-	srm_oper_config.scale_y = (float)dstHeight / srcHeight;
+	srm_oper_config.scale_x = (float)dstWidth / (float)srcWidth;
+	srm_oper_config.scale_y = (float)dstHeight / (float)srcHeight;
 
     srm_oper_config.mirror_x = mirX;
     srm_oper_config.mirror_y = mirY;
