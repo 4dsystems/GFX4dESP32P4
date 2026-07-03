@@ -180,10 +180,10 @@ void gfx4desp32P4_touch::Open4dGFX(String file4d) {
 		memset(gciobjtouchenable, 0, MAX_WIDGETS);
 		memset(gciobjtouchenable, 0, MAX_WIDGETS);
 		memset(tuiRM, 0, MAX_WIDGETS);
-		memset(tuiExtra2, 0, gciobjnum << 2); 
 		memset(tuScaleXY, 0, MAX_WIDGETS << 2);
 		WidgetAlloc = true;
         _Open4dGFX(file4d, false);
+		memset(tuiExtra2, 0, gciobjnum << 2); 
     }
 	if (gciobjnum > 0) opgfx = 1;
 }
@@ -212,6 +212,10 @@ void gfx4desp32P4_touch::_Open4dGFXjpeg(String file4d, uint8_t jpType){
     uint64_t fSize;
     if (GCItype == GCI_SYSTEM_JPEG_USD){
         file4d = "/" + file4d;
+		if (!(SD_MMC.exists(file4d))) {
+		    gciobjnum = 0;
+			return;
+		}
         if (CheckSD()) userImag = SD_MMC.open((char*)file4d.c_str());
         fSize = userImag.size();
     } else {
@@ -606,6 +610,7 @@ void gfx4desp32P4_touch::imageTouchEnableRange(int gcinumFrom, int gcinumTo,
 */
 /****************************************************************************/
 void gfx4desp32P4_touch::UserImages(uint16_t uisnb, int16_t framenb) {
+  if (!(gciobjnum > 0)) return;
   tuiImageIndex[uisnb] = framenb;
   boolean setemp = sEnable;
   ScrollEnable(false);

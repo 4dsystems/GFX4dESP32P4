@@ -2899,13 +2899,14 @@ void gfx4desp32P4::DrawWidget(uint32_t Index, int16_t uix, int16_t uiy,
 	bool swapped = false;
 	int altw = -1;
 	int alth = -1;
-	int deg = (tuiRM[ui] & 0x03) * 90;
+	int deg;
+	deg = (tuiRM[ui] & 0x03) * 90;
 	int x1 = uix + uiw - 1;
     int y1 = uiy + uih - 1;
 	//bool softDEC = false;
 	if (bar != 0)
         uix = uix + bar;
-    if (((GCItype == GCI_SYSTEM_USD ||  GCItype == GCI_SYSTEM_JPEG_USD) && (!userImag)) ||
+    if (((GCItype == GCI_SYSTEM_USD ||  GCItype == GCI_SYSTEM_JPEG_USD) && (!(gciobjnum > 0))) ||
         (GCItype == GCI_SYSTEM_PROGMEM && (!gcidatArray)))
         return;
     if (GCItype == GCI_SYSTEM_JPEG_USD || GCItype == GCI_SYSTEM_JPEG_FLASH){
@@ -3027,8 +3028,9 @@ void gfx4desp32P4::DrawWidget(uint32_t Index, int16_t uix, int16_t uiy,
 */
 /****************************************************************************/
 void gfx4desp32P4::UserImages2image(int16_t ui, int16_t val, int16_t range,
-    bool orientation, int16_t gap1,
+	bool orientation, int16_t gap1,
     int16_t gap2) {
+	if (gciobjnum == 0) return;
     if ((GCItype == GCI_SYSTEM_USD && (!userImag)) ||
         (GCItype == GCI_SYSTEM_PROGMEM && (!gcidatArray)))
         return;
@@ -3079,8 +3081,9 @@ void gfx4desp32P4::UserImages2image(int16_t ui, int16_t val, int16_t range,
 */
 /****************************************************************************/
 void gfx4desp32P4::UserImages3image(int16_t ui, int16_t val, int16_t range,
-    bool orientation, int16_t gap1, int16_t gap2,
+	bool orientation, int16_t gap1, int16_t gap2,
     int32_t tc) {
+	if (gciobjnum == 0) return;
     if ((GCItype == GCI_SYSTEM_USD && (!userImag)) ||
         (GCItype == GCI_SYSTEM_PROGMEM && (!gcidatArray)))
         return;
@@ -3571,7 +3574,8 @@ void gfx4desp32P4::UserImage(uint16_t ui, int altx, int alty) {
 */
 /****************************************************************************/
 void gfx4desp32P4::UserImages(uint16_t uisnb, int16_t framenb) {
-    tuiImageIndex[uisnb] = framenb;
+    if (gciobjnum == 0) return;
+	tuiImageIndex[uisnb] = framenb;
     boolean setemp = sEnable;
     ScrollEnable(false);
     if (framenb > (gciobjframes[uisnb] - 1) || framenb < 0) {
@@ -3619,7 +3623,8 @@ void gfx4desp32P4::imageShow(uint16_t uisnb) {
 /****************************************************************************/
 void gfx4desp32P4::UserImages(uint16_t uis, int16_t frame, int offset,
     int16_t altx, int16_t alty) {
-    tuiImageIndex[uis] = frame;
+    if (gciobjnum == 0) return;
+	tuiImageIndex[uis] = frame;
     boolean setemp = sEnable;
     ScrollEnable(false);
     if (frame > (gciobjframes[uis] - 1) || frame < 0) {
@@ -3791,7 +3796,8 @@ void gfx4desp32P4::LedDigitsDisplay(int64_t newval, uint16_t index,
 /****************************************************************************/
 void gfx4desp32P4::UserImages(uint16_t uisnb, int16_t framenb, int16_t newx,
     int16_t newy) {
-    tuiImageIndex[uisnb] = framenb;
+    if (gciobjnum == 0) return;
+	tuiImageIndex[uisnb] = framenb;
     uimage = false;
     boolean setemp = sEnable;
     ScrollEnable(false);
@@ -3816,7 +3822,8 @@ void gfx4desp32P4::UserImages(uint16_t uisnb, int16_t framenb, int16_t newx,
 */
 /****************************************************************************/
 void gfx4desp32P4::UserImages(uint16_t uis, int16_t frame, int offset) {
-    tuiImageIndex[uis] = frame;
+    if (gciobjnum == 0) return;
+	tuiImageIndex[uis] = frame;
     boolean setemp = sEnable;
     ScrollEnable(false);
     if (frame > (gciobjframes[uis] - 1) || frame < 0) {
@@ -3843,7 +3850,8 @@ void gfx4desp32P4::UserImages(uint16_t uis, int16_t frame, int offset) {
 */
 /****************************************************************************/
 void gfx4desp32P4::UserImagesDR(uint16_t uino, int frames, int16_t uxpos,
-    int16_t uypos, int16_t uwidth, int16_t uheight) {
+	int16_t uypos, int16_t uwidth, int16_t uheight) {
+	if (gciobjnum == 0) return;
     if (uxpos >= width || uypos >= height || uxpos < 0 || uypos < 0)
         return;
     if (uwidth < 1 || uheight < 1)
@@ -3957,6 +3965,7 @@ void gfx4desp32P4::UserImagesDR(uint16_t uino, int frames, int16_t uxpos,
 */
 /****************************************************************************/
 void gfx4desp32P4::UserImagesAsRoundRect(int ui, int frame, int radius){
+	if (gciobjnum == 0) return;
 	tuiImageIndex[ui] = frame;
 	RoundRectFilledAA(tuix[ui], tuiy[ui], tuiw[ui], tuih[ui], radius, SelectDataSourceGCI(ui));
 	tuiExtra2[ui] = tuiExtra2[ui] & 0x3fff;
