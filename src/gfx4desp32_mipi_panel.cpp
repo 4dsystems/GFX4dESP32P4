@@ -133,7 +133,11 @@ void gfx4desp32_mipi_panel::DisplayInit(int* mpconfig, int freq) {
   esp_lcd_dsi_bus_config_t bus_config = {
     .bus_id = 0,
     .num_data_lanes = 2,
-    .phy_clk_src = MIPI_DSI_PHY_CLK_SRC_DEFAULT,
+#if defined(CONFIG_ESP32P4_SELECTS_REV_LESS_V3) // Hardware Rev 1.x
+    .phy_clk_src = MIPI_DSI_PHY_PLLREF_CLK_SRC_DEFAULT_LEGACY,
+#else                                           // Hardware Rev 2.x
+    .phy_clk_src = MIPI_DSI_PHY_PLLREF_CLK_SRC_DEFAULT,
+#endif
     .lane_bit_rate_mbps = mpconfig[MIPI_DSI_LANE_RATE_MBPS],
   };
   ESP_ERROR_CHECK(esp_lcd_new_dsi_bus(&bus_config, &mipi_dsi_bus));
