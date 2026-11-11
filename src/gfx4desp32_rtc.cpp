@@ -214,8 +214,8 @@ Time gfx4desp32_rtc::RTCgetTime() {
     output.second =
         bcd_to_number((SECONDS & 0b01110000) >> 4, SECONDS & 0b00001111);
     return output;
-	return 0;
 	*/
+	return 0;
 }
 
 /****************************************************************************/
